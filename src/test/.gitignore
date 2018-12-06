@@ -2,6 +2,7 @@
 /Hero.class
 /ADHero.class
 /APHero.class
+<<<<<<< HEAD
 /Animal.class
 /Spider.class
 /Pet.class
@@ -9,3 +10,5 @@
 /Fish.class
 /TestNumber.class
 /TestString.class
+=======
+>>>>>>> branch 'master' of https://github.com/JoanOfArcAlter/Le-Crondement-Du-Haine
