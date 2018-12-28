@@ -1,5 +1,6 @@
 package test;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,43 +17,68 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 public class TestGUI {
     public static void main(String[] args) {
-    	  
-        final JFrame f = new JFrame("LoL");
-        f.setSize(800, 600);
-        f.setLocationRelativeTo(null);
-        f.setLayout(null);
-  
-        final JLabel l = new JLabel("");
-  
-        ImageIcon i = new ImageIcon("e:/project/j2se/shana_heiheihei.png");
-        l.setIcon(i);
-        l.setBounds(375, 275, i.getIconWidth(), i.getIconHeight());
-  
-        f.add(l);
-  
-        // MouseAdapter 适配器，只需要重写用到的方法，没有用到的就不用写了
-        l.addMouseListener(new MouseAdapter() {
-  
-            // 只有mouseEntered用到了
-            public void mouseEntered(MouseEvent e) {
-  
-                Random r = new Random();
-  
-                int x = r.nextInt(f.getWidth() - l.getWidth());
-                int y = r.nextInt(f.getHeight() - l.getHeight());
-  
-                l.setLocation(x, y);
-  
+    	 
+        JFrame f = new JFrame("LOL");
+        f.setLayout(new FlowLayout());
+        JFileChooser fc = new JFileChooser();
+        fc.setFileFilter(new FileFilter() {
+             
+            @Override
+            public String getDescription() {
+                // TODO Auto-generated method stub
+                return ".txt";
+            }
+             
+            @Override
+            public boolean accept(File f) {
+                return f.getName().toLowerCase().endsWith(".txt");
             }
         });
   
+        JButton bOpen = new JButton("打开文件");
+  
+        JButton bSave = new JButton("保存文件");
+  
+        f.add(bOpen);
+        f.add(bSave);
+  
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setSize(250, 150);
+        f.setLocationRelativeTo(null);
   
         f.setVisible(true);
+          
+        bOpen.addActionListener(new ActionListener() {
+              
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                 int returnVal =  fc.showOpenDialog(f);
+                 File file = fc.getSelectedFile();
+                 if (returnVal == JFileChooser.APPROVE_OPTION) {
+                     JOptionPane.showMessageDialog(f, "计划打开文件:" + file.getAbsolutePath());
+                 }
+                  
+            }
+        });
+        bSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int returnVal =  fc.showSaveDialog(f);
+                File file = fc.getSelectedFile();
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    JOptionPane.showMessageDialog(f, "计划保存到文件:" + file.getAbsolutePath());
+                }
+            }
+        });
+  
     }
 }
